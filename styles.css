@@ -1,0 +1,21 @@
+
+table, td, th {
+    border: 1px solid black;
+    border-collapse: collapse; /* Ensures continuous borders */
+}
+
+td {
+    padding: 10px;
+}
+
+th {
+    padding: 20px;
+}
+
+thead {
+    font-weight: bold;
+    border: 2px solid black;
+    font-size: 16px;
+    background-color: lightgray;
+}
+
