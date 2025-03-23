@@ -222,15 +222,3 @@ function changeReadStatus(bookID) {
 }
 
 
-// function changeReadStatus(bookID) {
-//     const readStatusTD = document.querySelector(`td[data-id]="${bookID}"`).textContent;
-//     if (readStatusTD) {
-//         if (readStatusTD === "Yes") {
-//             readStatusTD = "No";
-//         } else {
-//             readStatusTD = "Yes";
-//         }
-//     }
-//     //now change object from array
-//     myLibrary.find(book => book.bookID === bookID).isRead();
-// };
