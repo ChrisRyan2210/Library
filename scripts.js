@@ -1,42 +1,98 @@
-//array representing library of books
-const myLibrary = [];
+//Library class
+class Library {
 
-//Book Constructor
-function Book(bookID, author, title, pages, read) {
-    if (!new.target) {
-        throw Error("You must use the keword 'new'");
+    constructor(library = []) {
+        if (!Array.isArray(library)) {
+            throw new Error("Expected an array");
+        }
+        this.library = library;
+    };
+    
+    getBooks() {
+        return this.library;
+    };
+
+    addBookToLibrary(book) {
+
+        this.library.push(book);
+    };
+};
+
+
+//book class
+class Book {
+
+    constructor(bookID, author, title, pages, read) {
+        if (!new.target) {
+            throw Error("You must use the keword 'new'");
+        }
+        this.bookID = bookID;
+        this.author = author;
+        this.title = title;
+        this.pages = pages;
+        this.read = read;
+    };
+
+    getBookID() {
+        return this.bookID;
+    };
+
+    setBookID(bookID) {
+        this.bookID = bookID;
+    };
+
+    getAuthor() {
+        return this.author;
+    };
+
+    setAuthor(author) {
+        this.author = author;
+    };
+
+    getTitle() {
+        return this.title;
+    };
+
+    setTitle(title) {
+        this.title = title;
+    };
+
+    getPages() {
+        return this.pages;
+    };
+
+    setPages(pages) {
+        this.pages = pages;
     }
-    this.bookID = bookID;
-    this.author = author;
-    this.title = title;
-    this.pages = pages;
-    this.read = read;
 
+    getRead() {
+        return this.read;
+    };
+
+    setRead(value) {
+        if (value === "Yes") {
+            this.read = false;
+        } else {
+            this.read = true;
+        }
+    };
 };
 
-//Prototype function change read status
-Book.prototype.isRead = function(read) {
-    if (read === "Yes") {
-        this.read = false;
-    } else {
-        this.read = true;
-    }
-};
+//testing - working :)
+const book = new Book(crypto.randomUUID(), "Rowling", "Harry Potter", 255, true); 
+console.log(book.getAuthor());
 
-// change read status 
+//testing - working (returning book object)
+const myLibrary = new Library();
+myLibrary.addBookToLibrary(book);
+console.log(myLibrary.getBooks());
 
 
-const addBookToLibrary = (id, author, title, pages, read) => {
 
-    const book = new Book(id, author, title, pages, read);
-    myLibrary.push(book);
-};
 
-addBookToLibrary(crypto.randomUUID(), "Tolkien", "The Hobbit", 255, true);
 
 //function to loop through array and display books on webpage
 const table = document.querySelector(".book-list");
-
 myLibrary.forEach((book) => {
     const newRow = document.createElement("tr");//create a new row
     newRow.setAttribute("data-id", book.bookID); // setting the html dataset id attribute = to bookID
@@ -94,6 +150,12 @@ myLibrary.forEach((book) => {
     table.appendChild(newRow);
 });
 
+
+
+
+
+
+
 // bring up modal with button
 const dialog = document.querySelector("#addBookDialog");
 const btnCancel = document.querySelector("#cancel");
@@ -108,7 +170,7 @@ const btnSubmit = document.querySelector("dialog"); //note we grab the form here
 btnSubmit.addEventListener("submit", (e) => {
 
     e.preventDefault(); // stop the form from trying to send the data to the sever
-    
+
     // dynamically grabbing info passed from form 
     const formData = new FormData(e.target); //FormData is built in function that grabs passed info from event object 
     const bookData = {};
@@ -215,7 +277,7 @@ function changeReadStatus(bookID) {
         // Find the corresponding table row and 'read' column
         const row = document.querySelector(`tr[data-id="${bookID}"]`);
         const readTD = row.querySelector('td:nth-child(5)'); // Find the 5th column (read column)
-        
+
         // Update the 'read' column text
         readTD.textContent = book.read ? "Yes" : "No";
     }
